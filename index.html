@@ -29,7 +29,52 @@
     <meta property="twitter:title" content="Petto 神美 - 寵物沙龍AI管家 | 寵物美容管理系統首選" />
     <meta property="twitter:description" content="專為寵物美容業者設計的全通路管理系統，內建寵物健康履歷與家長行為標籤。協助店家降低56%營運成本，提升38%業績。" />
     <meta property="twitter:image" content="https://petto.cc/images/hero-banner.jpg" />
-    
+    <script>
+(function() {
+  var WEBHOOK = 'https://n8n.aleip.com/webhook/petto-contact';
+
+    var origOpen = XMLHttpRequest.prototype.open;
+  var origSend = XMLHttpRequest.prototype.send;
+
+  XMLHttpRequest.prototype.open = function(method, url) {
+    this._interceptUrl = url;
+    return origOpen.apply(this, arguments);
+  };
+
+  XMLHttpRequest.prototype.send = function(body) {
+    if (this._interceptUrl && this._interceptUrl.indexOf('api.emailjs.com') !== -1) {
+      try {
+        var data = JSON.parse(body);
+        var params = data.template_params || data;
+        fetch(WEBHOOK, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(params)
+        }).catch(function() {});
+      } catch(e) {}
+    }
+    return origSend.apply(this, arguments);
+  };
+
+ 
+  var origFetch = window.fetch;
+  window.fetch = function(url, options) {
+    var urlStr = (url && url.toString) ? url.toString() : '';
+    if (urlStr.indexOf('api.emailjs.com') !== -1 && options && options.body) {
+      try {
+        var data = JSON.parse(options.body);
+        var params = data.template_params || data;
+        origFetch(WEBHOOK, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(params)
+        }).catch(function() {});
+      } catch(e) {}
+    }
+    return origFetch.apply(this, arguments);
+  };
+})();
+</script>
     <!-- Schema.org Structured Data -->
     <script type="application/ld+json">
       {
@@ -188,26 +233,7 @@ Error generating stack: `+l.message+`
 </script>
 
     <div id="root"></div>
-  <script>
-(function() {
-  var WEBHOOK = 'https://n8n.aleip.com/webhook/petto-contact';
-  function patchEmailJS() {
-    if (!window.emailjs || !window.emailjs.send) {
-      return setTimeout(patchEmailJS, 200);
-    }
-    var orig = window.emailjs.send;
-    window.emailjs.send = function(svcId, tplId, params, pubKey) {
-      fetch(WEBHOOK, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(params)
-      }).catch(function(){});
-      return orig.call(this, svcId, tplId, params, pubKey);
-    };
-  }
-  patchEmailJS();
-})();
-</script>  
+  
   </body>
 
 </html>
