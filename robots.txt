@@ -1,13 +1,67 @@
+# Petto 神美 - 寵物沙龍AI管家
+# Robots.txt for https://petto.cc
+
+# 允許所有搜尋引擎爬蟲
 User-agent: *
 Allow: /
+Disallow: /api/
 Sitemap: https://petto.cc/sitemap.xml
 
-# AI Crawler Directives
-User-agent: GPTBot
+# Google 搜尋引擎
+User-agent: Googlebot
+Allow: /
+Disallow: /api/
+
+# Google 圖片搜尋
+User-agent: Googlebot-Image
 Allow: /
 
+# Bing 搜尋引擎
+User-agent: Bingbot
+Allow: /
+Disallow: /api/
+
+# Baidu 搜尋引擎 (中國市場)
+User-agent: Baiduspider
+Allow: /
+Disallow: /api/
+
+# AI 爬蟲 - OpenAI GPTBot
+User-agent: GPTBot
+Allow: /
+Disallow: /api/
+
+# AI 爬蟲 - Google Bard/Gemini
+User-agent: Google-Extended
+Allow: /
+
+# AI 爬蟲 - OpenAI ChatGPT
+User-agent: ChatGPT-User
+Allow: /
+
+# AI 爬蟲 - Anthropic Claude
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+# AI 爬蟲 - Perplexity
+User-agent: PerplexityBot
+Allow: /
+
+# AI 爬蟲 - Apple
+User-agent: Applebot-Extended
+Allow: /
+
+# AI 爬蟲 - Common Crawl
 User-agent: CCBot
 Allow: /
 
-User-agent: Google-Extended
+# AI 爬蟲 - Cohere
+User-agent: cohere-ai
+Allow: /
+
+# AI 爬蟲 - Meta
+User-agent: FacebookBot
 Allow: /
