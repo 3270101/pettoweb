@@ -1,67 +1,53 @@
-# Petto 神美 - 寵物沙龍AI管家
-# Robots.txt for https://petto.cc
+# Petto 神美 - https://petto.cc/
 
-# 允許所有搜尋引擎爬蟲
 User-agent: *
 Allow: /
+Disallow: /thank-you/
+Disallow: /404.html
 Disallow: /api/
-Sitemap: https://petto.cc/sitemap.xml
 
-# Google 搜尋引擎
+# Google and Bing search
 User-agent: Googlebot
 Allow: /
-Disallow: /api/
 
-# Google 圖片搜尋
 User-agent: Googlebot-Image
-Allow: /
+Allow: /images/
 
-# Bing 搜尋引擎
 User-agent: Bingbot
 Allow: /
-Disallow: /api/
 
-# Baidu 搜尋引擎 (中國市場)
-User-agent: Baiduspider
-Allow: /
-Disallow: /api/
-
-# AI 爬蟲 - OpenAI GPTBot
-User-agent: GPTBot
-Allow: /
-Disallow: /api/
-
-# AI 爬蟲 - Google Bard/Gemini
-User-agent: Google-Extended
+# OpenAI: ChatGPT Search, user-requested fetches, and model training
+User-agent: OAI-SearchBot
 Allow: /
 
-# AI 爬蟲 - OpenAI ChatGPT
 User-agent: ChatGPT-User
 Allow: /
 
-# AI 爬蟲 - Anthropic Claude
-User-agent: anthropic-ai
+User-agent: GPTBot
+Allow: /
+
+# Anthropic: Claude Search, user-requested fetches, and model training
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
 Allow: /
 
 User-agent: ClaudeBot
 Allow: /
 
-# AI 爬蟲 - Perplexity
+# Perplexity search
 User-agent: PerplexityBot
 Allow: /
 
-# AI 爬蟲 - Apple
+# Other AI and extended crawlers
+User-agent: Google-Extended
+Allow: /
+
 User-agent: Applebot-Extended
 Allow: /
 
-# AI 爬蟲 - Common Crawl
 User-agent: CCBot
 Allow: /
 
-# AI 爬蟲 - Cohere
-User-agent: cohere-ai
-Allow: /
-
-# AI 爬蟲 - Meta
-User-agent: FacebookBot
-Allow: /
+Sitemap: https://petto.cc/sitemap.xml
