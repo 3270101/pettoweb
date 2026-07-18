@@ -29,7 +29,7 @@
 ## 官方頁面
 
 - [首頁與產品功能](https://petto.cc/)
-- [寵物美容經營文章](https://petto.cc/articles/)
+- [毛孩知識](https://petto.cc/articles/)
 - [Petto 最新消息](https://petto.cc/news/)
 - [常見問題](https://petto.cc/#faq)
 - [預約顧問展示](https://petto.cc/#contact)
