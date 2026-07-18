@@ -1,0 +1,33 @@
+name: One-time asset cache bust
+
+on:
+  push:
+    branches:
+      - fix/asset-cache-bust-20260719
+    paths:
+      - ".github/workflows/cache-bust.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  update-html:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Add release version to module script
+        shell: bash
+        run: |
+          find . -type f \( -name "index.html" -o -name "404.html" \) -not -path "./.git/*" -print0 \
+            | xargs -0 sed -i 's#src="/assets/main-JNtmfxqX.js"#src="/assets/main-JNtmfxqX.js?v=20260719-1"#g'
+          updated_count="$(grep -RIl 'main-JNtmfxqX.js?v=20260719-1' --include='index.html' --include='404.html' . | wc -l)"
+          test "$updated_count" -eq 13
+      - name: Commit cache-busted HTML
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/cache-bust.yml
+          git add -A
+          git commit -m "fix: cache-bust repaired JavaScript bundle"
+          git push
